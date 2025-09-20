@@ -1,5 +1,5 @@
 import { CANVAS_W, CANVAS_H } from './canvas.js';
-import { makeChunk, CHUNK_SIZE } from './world.js';
+import { makeChunk, CHUNK_SIZE, WORLD_BOUNDS } from './world.js';
 
 export const player = {
   x: 0,
@@ -32,6 +32,10 @@ export function movePlayer(dx, dy, dt) {
     player.facing = Math.atan2(dy, dx);
     let nx = player.x + dx * player.speed * dt;
     let ny = player.y + dy * player.speed * dt;
+
+    // clamp target to world bounds (simple barrier)
+    nx = Math.max(WORLD_BOUNDS.minX + player.size*0.5, Math.min(WORLD_BOUNDS.maxX - player.size*0.5, nx));
+    ny = Math.max(WORLD_BOUNDS.minY + player.size*0.5, Math.min(WORLD_BOUNDS.maxY - player.size*0.5, ny));
 
     // Simple collision with trees
     const pr = player.size * 0.45;
@@ -69,4 +73,3 @@ function collidesCircleRect(cx, cy, r, rx, ry, rw, rh) {
   const dy = cy - closestY;
   return dx*dx + dy*dy <= r*r;
 }
-

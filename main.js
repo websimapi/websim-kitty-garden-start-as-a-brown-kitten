@@ -1,7 +1,7 @@
 // Main game loop and coordination
 import { loadImages } from './assets.js';
 import { canvas, ctx, cam, resizeCanvas } from './canvas.js';
-import { ensureChunks, makeChunk, CHUNK_SIZE } from './world.js';
+import { ensureChunks, makeChunk, CHUNK_SIZE, WORLD_BOUNDS } from './world.js';
 import { player, movePlayer } from './player.js';
 import { setupKeyboard, setupJoystick, setupGamepad, getMovementInput } from './input.js';
 import { updateItemPhysics } from './items.js';
@@ -120,14 +120,28 @@ function render() {
   ctx.restore();
   
   renderHUD(debugOn);
+
+  // Draw map boundary / barrier overlay in screen space
+  ctx.save();
+  ctx.translate(-cam.x, -cam.y);
+  ctx.lineWidth = 6;
+  ctx.strokeStyle = 'rgba(80,80,80,0.9)';
+  ctx.globalAlpha = 0.9;
+  ctx.strokeRect(WORLD_BOUNDS.minX, WORLD_BOUNDS.minY, WORLD_BOUNDS.maxX - WORLD_BOUNDS.minX, WORLD_BOUNDS.maxY - WORLD_BOUNDS.minY);
+  // subtle inner highlight
+  ctx.lineWidth = 2;
+  ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+  ctx.strokeRect(WORLD_BOUNDS.minX+6, WORLD_BOUNDS.minY+6, WORLD_BOUNDS.maxX - WORLD_BOUNDS.minX-12, WORLD_BOUNDS.maxY - WORLD_BOUNDS.minY-12);
+  ctx.restore();
 }
 
 // Boot
 (async function init() {
   resizeCanvas();
   await loadImages();
-  player.x = 0;
-  player.y = 0;
+  // spawn player in the world center
+  player.x = (WORLD_BOUNDS.minX + WORLD_BOUNDS.maxX) / 2;
+  player.y = (WORLD_BOUNDS.minY + WORLD_BOUNDS.maxY) / 2;
   ensureChunks(player.x, player.y, 2);
   setupKeyboard();
   setupJoystick();

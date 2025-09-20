@@ -1,6 +1,14 @@
 // World generation and chunk management
 export const CHUNK_SIZE = 600;
 
+/* new: define finite world bounds (3x3 chunks) */
+export const WORLD_BOUNDS = {
+  minX: 0,
+  minY: 0,
+  maxX: CHUNK_SIZE * 3,
+  maxY: CHUNK_SIZE * 3
+};
+
 export const world = {
   chunkMap: new Map()
 };
