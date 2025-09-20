@@ -1,5 +1,3 @@
-
-```
 // Asset loading and management
 const assetPaths = {
   kitten: 'kitten.png',

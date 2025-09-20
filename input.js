@@ -1,5 +1,3 @@
-
-```javascript
 import { collectAction, performAction } from './items.js';
 import { switchVariant, player } from './player.js';
 

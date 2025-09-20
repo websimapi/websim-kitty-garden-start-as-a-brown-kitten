@@ -1,5 +1,3 @@
-
-```
 // World generation and chunk management
 export const CHUNK_SIZE = 600;
 
