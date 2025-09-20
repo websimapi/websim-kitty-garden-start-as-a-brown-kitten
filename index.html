@@ -1,0 +1,55 @@
+
+```
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kitty Garden — Start as a Brown Kitten</title>
+  <link rel="stylesheet" href="styles.css">
+  <script type="importmap">
+  {
+    "imports": {
+      "nipplejs": "https://cdn.jsdelivr.net/npm/nipplejs@0.9.0/dist/nipplejs.min.js"
+    }
+  }
+  </script>
+</head>
+<body>
+  <main class="app">
+    <!-- UI hidden for now -->
+    <header class="hud hidden" aria-hidden="true">
+      <div class="title">Kitty Garden</div>
+      <div class="info">Use WASD / arrow keys to move. Tap or use on-screen joystick on mobile.</div>
+    </header>
+
+    <div class="stage-wrap">
+      <canvas id="gameCanvas" width="800" height="600" aria-label="Kitty Garden game canvas"></canvas>
+      <div id="joystick" class="joystick" aria-hidden="true"></div>
+
+      <!-- pickup toast shows what was collected -->
+      <div id="pickupToast" class="pickup-toast" aria-live="polite" aria-atomic="true"></div>
+
+      <!-- added ABXY gamepad -->
+      <div id="gamepad" class="gamepad" aria-hidden="false" role="group" aria-label="Gamepad">
+        <div class="pad-row">
+          <button class="btn btn-x" id="btnX" aria-label="X button">X</button>
+          <button class="btn btn-y" id="btnY" aria-label="Y button">Y</button>
+        </div>
+        <div class="pad-row">
+          <button class="btn btn-a" id="btnA" aria-label="A button">A</button>
+          <button class="btn btn-b" id="btnB" aria-label="B button">B</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Controls hidden for a minimal view; joystick remains for touch -->
+    <footer class="controls hidden" aria-hidden="true">
+      <button id="resetBtn">Reset Position</button>
+      <label><input id="toggleDebug" type="checkbox"> Show debug</label>
+    </footer>
+  </main>
+
+  <script type="module" src="main.js"></script>
+</body>
+</html>
